@@ -35,4 +35,9 @@ public class Book{
         this.publishedDate = publishedDate;
     }
 
+    @Override
+    public String toString(){
+        return "Book: ID: " + id + " Title: " + title + " Author: " + author + " Published Date: " + publishedDate;
+
+    }
 }
