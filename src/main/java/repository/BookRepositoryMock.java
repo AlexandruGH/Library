@@ -24,6 +24,12 @@ public class BookRepositoryMock implements BookRepository{
     public boolean save(Book book) {
         return books.add(book);
     }
+
+    @Override
+    public boolean delete(Book book) {
+        return books.remove(book);
+    }
+
     @Override
     public void removeAll() {
         books.clear();

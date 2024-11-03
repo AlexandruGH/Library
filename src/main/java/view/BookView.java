@@ -1,5 +1,6 @@
 package view;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,15 +9,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import view.model.BookDTO;
 
-import java.util.*;
+import java.util.List;
 
 public class BookView {
     private TableView bookTableView;
@@ -26,6 +24,8 @@ public class BookView {
     private Label authorLabel;
     private Label titleLabel;
     private Button saveButton;
+    private Button deleteButton;
+
     public BookView(Stage primaryStage, List<BookDTO> bookDTOS){
         primaryStage.setTitle("Library");
 
@@ -58,7 +58,7 @@ public class BookView {
 
         bookTableView.setItems(booksObservableList);
 
-        gridPane.add(bookTableView,0,0, 4,1);
+        gridPane.add(bookTableView,0,0, 5,1);
     }
 
     private void initSaveOptions(GridPane gridPane){
@@ -76,6 +76,9 @@ public class BookView {
 
         saveButton = new Button("Save");
         gridPane.add(saveButton, 5, 1);
+
+        deleteButton = new Button("Delete");
+        gridPane.add(deleteButton, 6, 1);
     }
 
     private void initializeGridPane(GridPane gridPane){
@@ -87,6 +90,14 @@ public class BookView {
 
     public void addSaveButtonListener(EventHandler<ActionEvent> saveButtonListener){
         saveButton.setOnAction(saveButtonListener);
+    }
+
+    public void addSelectionTableListener(ChangeListener selectionTableListener){
+        bookTableView.getSelectionModel().selectedItemProperty().addListener(selectionTableListener);
+    }
+
+    public void addDeleteButtonListener(EventHandler<ActionEvent> deleteButtonListener){
+        deleteButton.setOnAction(deleteButtonListener);
     }
 
     public void displayAlertMessage(String titleInformation, String headerInformation, String contextInformation){
@@ -106,10 +117,6 @@ public class BookView {
         return authorTextField.getText();
     }
 
-    public void setBooksObservableList(List<BookDTO> booksList){
-        this.booksObservableList = FXCollections.observableArrayList(booksList);
-    }
-
     public ObservableList<BookDTO> getBooksObservableList(){
         return booksObservableList;
     }
@@ -117,4 +124,13 @@ public class BookView {
     public void addBookToObservableList(BookDTO bookDTO){
         this.booksObservableList.add(bookDTO);
     }
+
+    public void removeBookFromObservableList(BookDTO bookDTO){
+        this.booksObservableList.remove(bookDTO);
+    }
+
+    public TableView getBookTableView(){
+        return bookTableView;
+    }
 }
+
