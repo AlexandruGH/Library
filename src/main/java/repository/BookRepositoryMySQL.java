@@ -76,6 +76,22 @@ public class BookRepositoryMySQL implements BookRepository {
     }
 
     @Override
+    public boolean delete(Book book) {
+        String newSql = "DELETE FROM book WHERE author=\'" + book.getAuthor() +"\' AND title=\'" + book.getTitle()+"\';";
+
+
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(newSql);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void removeAll() {
         String sql = "DELETE FROM book WHERE id >= 0;";
 
