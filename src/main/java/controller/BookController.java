@@ -5,14 +5,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import mapper.BookMapper;
-import model.builder.BookBuilder;
-import service.BookService;
+import service.book.BookService;
 import view.BookView;
 import view.model.BookDTO;
 import view.model.builder.BookDTOBuilder;
-
-import java.sql.SQLOutput;
-import java.util.List;
 
 public class BookController {
     private final BookView bookView;
