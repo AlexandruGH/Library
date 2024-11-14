@@ -1,6 +1,6 @@
-package service;
+package service.book;
 import model.Book;
-import repository.BookRepository;
+import repository.book.BookRepository;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

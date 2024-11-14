@@ -1,4 +1,4 @@
-package repository;
+package repository.book;
 
 import model.Book;
 import model.builder.BookBuilder;
@@ -58,21 +58,23 @@ public class BookRepositoryMySQL implements BookRepository {
     }
 
 
-    @Override
     public boolean save(Book book) {
+        String newSql = "INSERT INTO book VALUES(null, ?, ?, ?);";
 
-        String newSql = "INSERT INTO book VALUES(null, \'" + book.getAuthor() +"\', \'" + book.getTitle()+"\', \'" + book.getPublishedDate() + "\' );";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(newSql);
+            preparedStatement.setString(1, book.getAuthor());
+            preparedStatement.setString(2, book.getTitle());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(book.getPublishedDate()));
 
+            int rowsInserted = preparedStatement.executeUpdate();
 
-        try{
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(newSql);
+            return (rowsInserted != 1) ? false : true;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
     @Override
